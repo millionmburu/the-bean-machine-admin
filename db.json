@@ -1,0 +1,13 @@
+{
+  "coffee": [
+    {
+      "name": "Brazil Santos Blend",
+      "description": "Smooth low-acid coffee with chocolate undertones.",
+      "origin": "Brazil",
+      "price": 1000,
+      "stock": 18,
+      "id": "bKFmRXWyYgc"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}

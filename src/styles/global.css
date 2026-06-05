@@ -1,0 +1,19 @@
+:root {
+  --coffee-primary: #48271A;
+  --coffee-dark: #2C1810;
+  --coffee-light: #6B3E2E;
+  --cream: #F8F5F2;
+  --white: #FFFFFF;
+  --black: #111111;
+
+}
+
+.container {
+  background-color: rgba(255, 255, 255, 0.05);
+  padding: 20px;
+  border-radius: 10px;
+}
+
+
+
+
