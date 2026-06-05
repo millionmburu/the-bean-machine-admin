@@ -1,16 +1,39 @@
-# React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# The Bean Machine
 
-Currently, two official plugins are available:
+A simple coffee shop admin dashboard built with React.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Features
 
-## React Compiler
+- View coffee products
+- Add new products
+- Edit products (name, price, stock)
+- Delete products
+- Search products
+- Stock tracking
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Tech Stack
 
-## Expanding the ESLint configuration
+- React (Vite)
+- Axios
+- Bootstrap
+- JSON Server
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Live Demo
+
+https://the-bean-machine-admin.vercel.app/
+
+## Setup
+
+### Install dependencies
+npm install
+
+### Run frontend
+npm run dev
+
+### Run backend (JSON Server)
+npx json-server --watch db.json --port 3000
+
+## API Endpoint
+
+http://localhost:3000/coffee
