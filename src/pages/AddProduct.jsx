@@ -1,6 +1,6 @@
 import { useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { supabase } from "../services/supabase";
 
 function AddProduct() {
   const navigate = useNavigate();
@@ -25,8 +25,6 @@ function AddProduct() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log("FORM SUBMIT:", formData);
-
     if (!formData.name || !formData.price) {
       alert("Name and Price are required!");
       return;
@@ -35,15 +33,26 @@ function AddProduct() {
     setLoading(true);
 
     try {
-      const res = await axios.post("http://localhost:3000/coffee", {
-        name: formData.name,
-        description: formData.description,
-        origin: formData.origin,
-        price: Number(formData.price),
-        stock: Number(formData.stock)
-      });
+      const { data, error } = await supabase
+        .from("coffee")
+        .insert([
+          {
+            name: formData.name,
+            description: formData.description,
+            origin: formData.origin,
+            price: Number(formData.price),
+            stock: Number(formData.stock)
+          }
+        ])
+        .select();
 
-      console.log("POST SUCCESS:", res.data);
+      if (error) {
+        console.log("POST ERROR:", error);
+        alert("Failed to add product");
+        return;
+      }
+
+      console.log("POST SUCCESS:", data);
 
       alert("Product added successfully!");
 
@@ -56,19 +65,21 @@ function AddProduct() {
       });
 
       navigate("/products");
+
     } catch (error) {
       console.log("POST ERROR:", error);
-      alert("Failed to add product. Check console.");
+      alert("Something went wrong");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div>
-      <h2>Add Coffee Product</h2>
+    <div className="container mt-4">
+      <h2 className="mb-3">Add Coffee Product</h2>
 
       <form onSubmit={handleSubmit}>
+
         <input
           name="name"
           value={formData.name}
@@ -117,6 +128,7 @@ function AddProduct() {
         >
           {loading ? "Adding..." : "Add Product"}
         </button>
+
       </form>
     </div>
   );

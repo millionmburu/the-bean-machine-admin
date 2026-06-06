@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
+import { supabase } from "../services/supabase";
 
 function Products() {
   const [coffee, setCoffee] = useState([]);
@@ -17,8 +17,15 @@ function Products() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await axios.get("http://localhost:3000/coffee");
-        setCoffee(res.data);
+        const {data, error} = await supabase
+          .from("coffee")
+          .select("*");
+        if (error) {
+          console.log(error);
+        } else {
+          setCoffee(data);
+        }
+  
       } catch (err) {
         console.log("Error:", err);
       } finally {
@@ -36,8 +43,14 @@ function Products() {
   // DELETE
   const deleteCoffee = async (id) => {
     try {
-      await axios.delete(`http://localhost:3000/coffee/${id}`);
-      setCoffee((prev) => prev.filter((item) => item.id !== id));
+      await supabase
+        .from("coffee")
+        .delete()
+        .eq("id", id);
+
+      setCoffee((prev) =>
+        prev.filter((item) => item.id !== id)
+      );
     } catch (error) {
       console.log("Delete error:", error);
     }
@@ -147,14 +160,14 @@ function Products() {
                 );
 
                 // update backend
-                await axios.patch(
-                  `http://localhost:3000/coffee/${editingId}`,
-                  {
-                    name: editForm.name,
-                    price: Number(editForm.price),
-                    stock: Number(editForm.stock)
-                  }
-                );
+                await supabase
+                .from("coffee")
+                .update({
+                  name: editForm.name,
+                  price: Number(editForm.price),
+                  stock: Number(editForm.stock)
+                })
+                .eq("id", editingId);
 
                 setEditingId(null);
               }}
